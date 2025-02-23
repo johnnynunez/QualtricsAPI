@@ -205,6 +205,7 @@ class Responses(Credentials):
         :type questionIds: List[str]
         :param surveyMetadataIds: If provided, only export metadata fields from the provided list of Metadata IDs. This will remove metadata included in export by default.
         :type surveyMetadataIds: List[str]
+        :type language: str
         :return: a Pandas DataFrame
         '''
 
@@ -225,7 +226,8 @@ class Responses(Credentials):
             'filterId',
             'embeddedDataIds',
             'questionIds',
-            'surveyMetadataIds'
+            'surveyMetadataIds',
+            'language'
         ]
 
         for key in list(kwargs.keys()):
@@ -236,6 +238,9 @@ class Responses(Credentials):
                 assert isinstance(
                     kwargs['useLabels'], bool), 'Hey there, your "useLabels" parameter needs to be of type "bool"!'
                 dynamic_payload.update({'useLabels': kwargs[(key)]})
+            elif key == 'language':
+                assert isinstance(kwargs['language'], str), 'Hey there, your "language" parameter needs to be of type "str"!'
+                dynamic_payload.update({'language': kwargs['language']})
             elif key == 'exportResponsesInProgress':
                 assert isinstance(kwargs['exportResponsesInProgress'],
                                   bool), 'Hey there, your "exportResponsesInProgress" parameter needs to be of type "bool"!'
